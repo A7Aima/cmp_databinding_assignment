@@ -1,14 +1,6 @@
-<div class="container">
-  <div class="col-xs-12">
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="row">
-      <button type="button" class="btn btn-success" style="margin-right: 20px; margin-left: 50px;"
-        (click)="startIncrementing()">Start</button>
-      <button type="button" class="btn btn-danger" style="margin-left: 50px;"
-        (click)="startIncrementing()">Stop</button>
-    </div>
-  </div>
+<app-game-control (intervalValue)="onFiredInterval($event)"></app-game-control>
+
+<div class="row">
+    <app-even *ngFor="let i of evenNoList" [evenNo]="i"></app-even>
+    <app-odd *ngFor="let i of oddNoList" [oddNo]="i"></app-odd>
 </div>

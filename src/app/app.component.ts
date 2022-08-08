@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,22 +6,23 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @Output() refNumber = new EventEmitter<{ incrementvalue: number }>();
-  myInterval: any;
-  incValue: number = 0;
 
-  startIncrementing(): void {
-    this.myInterval = setInterval(function () { this.incValue = this.incValue + 1; }, 1000);
-    this.refNumber.emit({
-      incrementvalue: this.incValue,
-    });
+  oddNoList: number[] = [];
+  evenNoList: number[] = [];
+
+  constructor() {
   }
 
-  stopIncrementing(): void {
-    clearInterval(this.myInterval);
-    this.incValue = 0;
-    this.refNumber.emit({
-      incrementvalue: this.incValue,
-    });
+  onFiredInterval(value: number) {
+    if (value !== 0) {
+      if (value % 2 == 0) {
+        this.evenNoList.push(value);
+      } else {
+        this.oddNoList.push(value);
+      }
+    } else {
+      this.oddNoList = [];
+      this.evenNoList = [];
+    }
   }
 }
