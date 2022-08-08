@@ -7,10 +7,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class GameControlComponent implements OnInit {
   @Output() intervalValue = new EventEmitter<number>();
-  myInterval: any;
-  incValue: number;
+  myInterval: any = null;
+  valuePassing: number;
   constructor() {
-    this.incValue = 0;
+    this.valuePassing = 0;
   }
 
   ngOnInit(): void {
@@ -18,18 +18,29 @@ export class GameControlComponent implements OnInit {
   }
 
   startGame(): void {
-    this.myInterval = setInterval(() => {
-      this.incValue = this.incValue + 1;
-      console.log(this.incValue);
-      this.intervalValue.emit(this.incValue);
-    }, 1000);
+    if (this.myInterval == null) {
+      this.myInterval = setInterval(() => {
+        this.valuePassing = Math.floor(Math.random() * 100);
+        console.log(this.valuePassing);
+        this.intervalValue.emit(this.valuePassing);
+      }, 500);
+    }
 
   }
 
   stopGame(): void {
     clearInterval(this.myInterval);
-    this.incValue = 0;
-    console.log(this.incValue);
-    this.intervalValue.emit(this.incValue);
+    this.myInterval = null;
+    this.valuePassing = 0;
+    console.log(this.valuePassing);
+    this.intervalValue.emit(this.valuePassing);
+  }
+
+  pauseGame(): void {
+    clearInterval(this.myInterval);
+    this.myInterval = null;
+    this.valuePassing = -1;
+    console.log(this.valuePassing);
+    // this.intervalValue.emit(this.valuePassing);
   }
 }
